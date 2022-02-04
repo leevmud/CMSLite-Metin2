@@ -1,0 +1,26 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Alterar E-mail</h1>
+        <div class="news-post">
+            <section class="container-config">
+                <div class="box-user-forms">
+                    <span>Preencha para alterar o e-mail:</span>
+                    {if="$result != ''"}
+                        {if="$result[1] == 'success'"}
+                            <p class="user-forms-response success-create">{$result[0]}</p>
+                        {else}
+                            <p class="user-forms-response failed-create">{$result[0]}</p>
+                        {/if}
+                    {/if}
+                    <form action="/minha-conta/alterar-email" method="POST" class="user-forms">
+                        <input type="email" id="emailAtual" name="emailAtual" placeholder="E-mail atual" autocomplete="off" required><br>
+                        <input type="email" id="novoEmail" name="novoEmail" placeholder="Novo e-mail" autocomplete="off" required><a class="tip" tabindex="-1"> ?<span>- E-mail precisa ser válido. <br><br>- Permitido apenas domínios de e-mail conhecidos.</span></a><br>
+                        <input type="email" id="re-novoEmail" name="re-novoEmail" placeholder="Repita o novo e-mail" autocomplete="off" required><br>
+                        <input type="hidden" name="__token" value="{$csrf_token}">
+                        <button onclick="return confirm('Alterar E-mail?')">Alterar e-mail</button>
+                    </form>
+                </div>
+                
+            </section>
+        </div>
+    </main>

@@ -1,0 +1,27 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Banir / Desbanir Contas</h1>
+        <div class="news-post">
+            
+            <section class="container-config">
+                <div class="box-user-forms">
+                    <span>Digite o login para banir/desbanir:</span>
+                    {if="$result != false"}
+                        {if="$result[1] == 'success'"}
+                            <p class="user-forms-response success-create">{$result[0]}</p>
+                        {else}
+                            <p class="user-forms-response failed-create">{$result[0]}</p>
+                        {/if}
+                    {/if}
+                    <form action="/admin/ban" method="POST" class="user-forms">
+                        <input type="text" id="ban-username" name="ban-username" placeholder="Login/Username" autocomplete="off" required pattern="[a-zA-Z][A-Za-z0-9]{4,16}"><a class="tip" tabindex="-1">?<span>- Se o usuário já estiver banido, o banimento será removido.<br><br>- O ban temporário só é removido quando o tempo definido acabar. </span></a><br>
+
+                        <input type="number" id="ban-time" name="ban-time" placeholder="Duração do Ban" autocomplete="off" pattern="[0-9]{1,5}"><a class="tip" tabindex="-1">?<span>- Tempo do Bloqueio em dias.<br><br>- Deixar vazio para Bloqueio permanente.</span></a><br>
+
+                        <input type="hidden" name="__token" value="{$csrf_token}">
+                        <button onclick="return confirm('Deseja Banir/Desbanir o usuário?')">Banir/Desbanir</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>

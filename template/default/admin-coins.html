@@ -1,0 +1,28 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Adicionar Moedas</h1>
+        <div class="news-post">
+            
+            <section class="container-config">
+                <div class="box-user-forms">
+                    <span>Digite o login e a quantidade:</span>
+                    {if="$result != false"}
+                        {if="$result[1] == 'success'"}
+                            <p class="user-forms-response success-create">{$result[0]}</p>
+                        {else}
+                            <p class="user-forms-response failed-create">{$result[0]}</p>
+                        {/if}
+                    {/if}
+                    <form action="/admin/coins" method="POST" class="user-forms">
+                        <input type="text" id="coins-username" name="coins-username" placeholder="Login/Username" autocomplete="off" required pattern="[a-zA-Z][A-Za-z0-9]{4,16}">
+                        <br>
+                        <input type="number" id="coins-amount" name="coins-amount" placeholder="Quantidade" autocomplete="off" pattern="[0-9]{1,16}"><a class="tip" tabindex="-1">?<span>- Se passado um valor com o sinal de negativo "-" as moedas seram REMOVIDAS.<br>
+                        Exemplo: -10000</span></a>
+
+                        <input type="hidden" name="__token" value="{$csrf_token}">
+                        <button onclick="return confirm('Deseja Adicionar as moedas para o usuário?')">Adicionar</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>

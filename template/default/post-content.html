@@ -1,0 +1,7 @@
+
+    <main class="main-content">
+        <h1 class="main-title">[{$post.category}] {$post.title}</h1>
+        <article class="news-post">
+            <p>{function="htmlspecialchars_decode($post.content)"}</p>
+        </article>
+    </main>

@@ -1,0 +1,23 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Editar Postagem</h1>
+        <div class="news-post">
+            
+            <section class="container-config">
+                <div class="box-user-forms">
+                    <!-- <span>Digite o login para banir/desbanir:</span> -->
+                    <br>
+                    <form action="/admin/posts/editpost/{$post.id}" method="POST" class="site-posts">
+                        <input type="text" name="postTitle" id="postTitle" placeholder="Título" autocomplete="off" value="{$post.title}">
+                        <br>
+                        <input type="text" name="postCategory" id="postCategory" placeholder="Categoria (ex. Evento)" value="{$post.category}">
+                        <br>
+                        <textarea name="textEditor" id="textEditor">{$post.content}</textarea>
+                        <input type="hidden" name="__token" value="{$csrf_token}">
+                        <input type="hidden" name="id" value="{$post.id}">
+                        <button onclick="return confirm('Deseja salvar as alterações?')">Salvar Alterações</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>

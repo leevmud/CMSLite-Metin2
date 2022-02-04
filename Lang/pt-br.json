@@ -1,0 +1,71 @@
+{
+    "testes": "testes.",
+    
+    "invalid_username": "O Usuário informado não é válido.",
+    "invalid_password": "A senha informada não é válida.",
+    "invalid_match_pw": "As senhas digitas não conferem.",
+    "invalid_email": "O e-mail digitado não é válido.",
+    "invalid_match_email": "Os e-mails digitados não conferem.",
+    "invalid_csrf_token": "Ocorreu um erro, atualize a página e tente novamente.",
+    "username_not_avail": "O usuário escolhido não está disponível.",
+    "success_register": "Conta criada com sucesso!",
+    "generic_err_register": "Não foi possível criar a conta",
+    "error_captcha": "Falha na verificação do Captcha.",
+
+    "notfound_user_email": "Usuário ou E-mail incorretos.",
+    "fail_to_update_new_pass": "Ocorreu um erro, tente novamente.",
+    "send_email_error": "Ocorreu um erro ao enviar o e-mail, tente novamente.",
+    "sent_email": "Um e-mail foi enviado com as informações necessárias.",
+    "failed_to_get_user_email": "E-mail cadastrado inválido.",
+
+    "title_new_password": "Nova Senha",
+    "title_social_id": "Senha do Personagem",
+    "title_warehouse_pw": "Senha do Armazem",
+
+    "generic_login_err": "Usuário ou Senha inválidos.",
+    "user_dont_exist": "O Usuário não foi encontrado/não existe.",
+
+    "user_unbanned": "O ban permanente foi removido.",
+    "err_unbann_user": "O usuário não foi desbanido.",
+    "user_perma_ban": "O usuário foi banido permanentemente.",
+    "err_user_perma_ban": "Ocorreu um erro ao tentar banir o usuário.",
+    "user_temp_ban": "O Usuário foi banido temporariamente.",
+    "generic_err_user_ban": "Falha no banimento - erro incomum.",
+    "cant_login_user_banned": "Conta banida até: ",
+    "cant_login_user_banned2": "Conta banida.",
+
+    "disabled_register": "A criação de contas está desativada.",
+    "err_max_account_email": "O e-mail inserido já atingiu o número máximo de contas.",
+
+    "invalid_user_email": "O e-mail atual não está correto.",
+    "success_change_email": "O e-mail foi alterado com sucesso.",
+    "generic_err_change_email": "O e-mail não foi alterado.",
+
+    "success_change_password": "A senha foi alterada com sucesso!",
+    "generic_err_change_password": "A senha não foi alterada.",
+    "wrong_user_pw": "A senha atual está incorreta.",
+
+    "no_characters_found": "Nenhum personagem encontrado.",
+    "character_moved": "O personagem foi levado para a cidade.",
+    "character_in_town": "O personagem já está na cidade.",
+    "no_character_moved": "O personagem solicitado não foi encontrado.",
+
+    "not_posts_found": "Nenhuma postagem encontrada.",
+    "error_insert_new_post": "O post não foi inserido.",
+    "success_update_post": "A postagem foi atualizada com sucesso.",
+    "failed_update_post": "A postagem não foi atualizada.",
+    "post_deleted": "A postagem foi apagada.",
+    "err_post_delete": "A postagem não foi apagada.",
+    "invalid_value": "Quantidade inválida",
+    "coins_added": " moedas foram adicionadas ao usuário: ",
+    "err_add_coins": "Ocorreu um erro ao adicionar as moedas.",
+    
+    "btn_home": "INICIO",
+    "btn_register": "CRIAR CONTA",
+    "btn_my_account": "MINHA CONTA",
+    "btn_ranking": "RANKINGS",
+    "btn_ranking_player": "JOGADORES",
+    "btn_ranking_guild": "GUILDAS",
+    "btn_download": "DOWNLOADS"
+
+}

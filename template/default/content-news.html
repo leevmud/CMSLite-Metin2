@@ -1,0 +1,14 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Últimas postagens</h1>
+        <div class="news-post">
+            
+                {loop="$listAllPosts"}
+                <ul class="news-list-full">
+                    <li>[{$value.category}] <a href="/post/{$value.id}">{$value.title}  </a>({function="date('d/m', strtotime($value.date))"})</li>
+                    <hr>
+                </ul>
+                {/loop}
+          
+        </div>
+    </main>

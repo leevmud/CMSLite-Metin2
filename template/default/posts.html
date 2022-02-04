@@ -1,0 +1,44 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Gerenciar Postagens</h1>
+        <div class="news-post">
+            
+            <section class="container-config">
+                <div class="box-user-forms">
+                    <a class="new-posts-btn" href="/admin/posts/newpost">Nova Postagem</a>
+                    {if="$result != false"}
+                        {if="$result[1] == 'success'"}
+                            <p class="user-forms-response success-create">{$result[0]}</p>
+                        {else}
+                            <p class="user-forms-response failed-create">{$result[0]}</p>
+                        {/if}
+                    {/if}
+                   
+                    <table class="posts">
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoria</th>
+                            <th>Título</th>
+                            <th>Data</th>
+                            <th>Autor</th>
+                            <th>Ações</th>
+                        </tr>
+                        {loop="$listPosts"}
+                        <tr>
+                            <td>{$value.id}</td>
+                            <td>{$value.category}</td>
+                            <td><a href="/post/{$value.id}" target="__blank">{$value.title}</a></td>
+                            <td>{function="date('d/m/Y', strtotime($value.date))"}</td>
+                            <td>{$value.author}</td>
+                            <td>
+                                <a href="/admin/posts/editpost/{$value.id}" title="Editar"><i class="fas fa-edit"></i></a>
+                                <a href="/admin/posts/deletepost/{$value.id}" title="Apagar" onclick="return confirm('Deseja apagar a postagem?')"><i class="fas fa-times"></i></a>
+                            </td>
+                        </tr>
+                        {/loop}
+                    </table>
+            
+                </div>
+            </section>
+        </div>
+    </main>

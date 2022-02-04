@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{#SERVER_LANG#}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1280, maximum-scale=1">
+    <meta name="description" content="Agora disponível uma nova CMS para seu servidor de Metin2! Faça o download gratuito agora mesmo, um novo site para seu servidor com diversas funcionalidades! Aproveite!">
+    <link rel="stylesheet" href="/template/default/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="shortcut icon" href="/template/default/favicon.ico" type="image/x-icon">
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+    <title>{#SERVER_NAME#}</title>
+</head>
+<body>
+    <div class="modal-register active" id="modal-register">
+        {include="./modal/register"}
+    </div>
+    <div class="modal-login active">
+        {include="./modal/login"}
+    </div>
+    <header class="header-content">
+        <nav>
+            <ul class="menu">
+                <li><a class="item" href="/">{$text->textHTML('btn_home')}</a></li>
+                {if="!isset($_SESSION['id'])"}
+                <li><a class="item btn-register" tabindex="0">{$text->textHTML('btn_register')}</a></li>
+                {else}
+                <li><a class="item " href="/minha-conta">{$text->textHTML('btn_my_account')}</a></li>
+                {/if}
+                <li><a class="item" tabindex="0">{$text->textHTML('btn_ranking')}</a>
+                    <ul class="submenu">
+                        <li><a href="/ranking-jogadores">{$text->textHTML('btn_ranking_player')}</a></li>
+                        <li><a href="/ranking-guildas">{$text->textHTML('btn_ranking_guild')}</a></li>
+                    </ul>
+                </li>
+                <li><a class="item" href="/downloads">{$text->textHTML('btn_download')}</a></li>
+            </ul>
+        </nav>
+        <section class="top-content">
+            <div class="login">
+                <a class="btn-download-header" href="/downloads">
+                    <img src="/template/default/images/btn-download.png" alt="Download">
+                </a>
+                <div class="box-login">
+                    {if="!isset($_SESSION['id'])"}
+                    <a class="btn-login-header btn-login" tabindex="0">Acesse sua conta</a>
+                    <span class="box-login-question">Não tem uma conta? <a class="btn-register" tabindex="0">Criar conta!</a></span>
+                    {else}
+                    <a class="btn-login-header" href="/minha-conta">Gerencie sua conta</a>
+                    <span class="box-login-question">Você está logado, para sair faça <a href="/logout">Logout</a></span>
+                    {/if}
+                </div>
+            </div>
+            <div class="logo">
+                <a href="/">
+                    <img src="/template/default/images/logo.png" alt="Logo">
+                </a>
+            </div>
+            <div class="class-header">
+                <img src="/template/default/images/ranking_race_render_warrior.png" alt="Warrior-img">
+            </div>
+        </section>
+    </header>

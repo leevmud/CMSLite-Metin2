@@ -1,0 +1,42 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Minha Conta </h1>
+        <div class="news-post">
+            <span class="welcome">Bem vindo(a), <strong>{$username}</strong>, se desejar sair, faça <a href="/logout">Logout</a></span>
+            <hr>
+            {if="$result != ''"}
+                {if="$result[1] == 'success'"}
+                    <p class="user-forms-response success-create">{$result[0]}</p>
+                {else}
+                    <p class="user-forms-response failed-create">{$result[0]}</p>
+                {/if}
+            {/if}
+            <section class="container-config">
+                <div class="box-data">
+                    <span>Gerenciar Conta:</span>
+                    <a href="/minha-conta/alterar-email">Alterar E-mail</a>
+                    <a href="/minha-conta/alterar-senha">Alterar Senha</a>
+                    <a onclick="return confirm('Um e-mail será enviado, Deseja continuar?')" href="/minha-conta/senha-armazem">Senha do Armazém</a>
+                </div>
+                <div class="box-data">
+                    <span>Gerenciar Personagens:</span>
+                    <a onclick="return confirm('Um e-mail será enviado, Deseja continuar?')" href="/minha-conta/cod-apagar-personagem">Cód. Apagar Personagem</a>
+                    <a href="/minha-conta/desbugar-personagem">Desbugar Personagem</a>
+                </div>
+                <div class="box-data">
+                    <span>Loja:</span>
+                    <a href="#">Item Shop</a>
+                    <a href="#">Comprar Moedas</a>
+                </div>
+
+                {if="$admin === true"}
+                <div class="box-data">
+                    <span>Administração:</span>
+                    <a href="/admin/ban">Banir/Desbanir Conta</a>
+                    <a href="/admin/posts">Gerenciar Postagens</a>
+                    <a href="/admin/coins">Adicionar Moedas</a>
+                </div>
+                {/if}
+            </section>
+        </div>
+    </main>

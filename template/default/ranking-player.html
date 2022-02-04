@@ -1,0 +1,32 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Ranking de Jogadores</h1>
+        <div class="news-post">
+            <div class="links-pagination">
+                {function="generateLinksPagination($pAtual, $totalPages)"}
+            </div>
+            <table class="ranking">
+                <tr>
+                    <th>Rank</th>
+                    <th>Classe</th>
+                    <th>Nome</th>
+                    <th>Nível</th>
+                    <th>Reino</th>
+                    <th>Guilda</th>
+                    <th>EXP</th>
+                </tr>
+                {loop="$players"}
+                <tr>
+                    <td>{$counter+$contador}</td>
+                    <td>{function="getPlayerJob($value.job)"}</td>
+                    <td>{$value.name}</td>
+                    <td>{$value.level}</td>
+                    <td>{function="getPlayerEmpire($value.empire)"}</td>
+                    <td>{$guildName->getGuildName($value.id)}</td>
+                    <td>{$value.exp}</td>
+                </tr>
+                {/loop}
+            </table>
+            
+        </div>
+    </main>

@@ -1,0 +1,32 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Ranking de Guildas</h1>
+        <div class="news-post">
+            <div class="links-pagination">
+                {function="generateLinksPagination($pAtual, $totalPages, 'ranking-guildas')"}
+            </div>
+            <table class="ranking">
+                <tr>
+                    <th>Rank</th>
+                    <th>Guilda</th>
+                    <th>Reino</th>
+                    <th>Vitórias</th>
+                    <th>Empates</th>
+                    <th>Derrotas</th>
+                    <th>Pontuação</th>
+                </tr>
+                {loop="$guildas"}
+                <tr>
+                    <td>{$counter+$contador}</td>
+                    <td>{$value.name}</td>   
+                    <td>{function="getPlayerEmpire($value.empire)"}</td>       
+                    <td>{$value.win}</td>          
+                    <td>{$value.draw}</td>
+                    <td>{$value.loss}</td>
+                    <td>{$value.ladder_point}</td>
+                </tr>
+                {/loop}
+            </table>
+            
+        </div>
+    </main>

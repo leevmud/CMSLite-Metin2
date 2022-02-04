@@ -1,0 +1,44 @@
+
+    <main class="main-content">
+        <h1 class="main-title">Desbugar Personagens</h1>
+        <div class="news-post">
+            
+            <section class="container-config">
+                <div class="box-user-forms">
+                    <span>Escolha o Personagem:</span>
+                    {if="$result != false"}
+                        {if="$result[1] == 'success'"}
+                            <p class="user-forms-response success-create">{$result[0]}</p>
+                        {else}
+                            <p class="user-forms-response failed-create">{$result[0]}</p>
+                        {/if}
+                    {/if}
+
+                    {if="$characters == false"}
+                        <p class="user-forms-response failed-create">Você precisar criar personagens primeiro.</p>
+                    {else}
+                    <table class="ch-table">
+                        <tr>
+                            <th>Personagem</th>
+                            <th>Nível</th>
+                            <th></th>
+                        </tr>
+                        {loop="$characters"}
+                        <tr>
+                            <td>{$value.name}</td>
+                            <td>{$value.level}</td>
+                            <td><a href="/minha-conta/desbugar-personagem/{$value.id}" onclick="return confirm('Deseja desbugar o personagem?')">Desbugar</a></td>
+                        </tr>
+                        {/loop}
+                    {/if}
+                    </table><br>
+                    {if="$characters == false"}
+
+                    {else}
+                    <span class="ch-warning">Para desbugar um personagem é preciso que ele esteja deslogado a mais de <strong>5 Minutos.</strong></span><br>
+                    <span class="ch-warning">O personagem será levado para o mapa da cidade 1 do reino da conta.</span>
+                    {/if}
+                </div>
+            </section>
+        </div>
+    </main>

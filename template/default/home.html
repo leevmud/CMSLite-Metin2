@@ -1,0 +1,71 @@
+<section class="home-ranking">
+        <div class="section-title">
+            <h1 class="home-ranking-title">Top Jogadores</h1>
+            <span class="home-ranking-subtitle">Por Classe</span>
+        </div>
+        <div class="home-ranking-container">
+            <div class="home-ranking-content-lycan">
+                <ul>
+                    {if="$top1['warrior'].job === 0"}
+                    <li class="bg-ranking-home-lycan warrior-m">
+                    {else}
+                    <li class="bg-ranking-home-lycan warrior-f">
+                    {/if}
+                        <p class="player-name">{$top1['warrior'].name}</p>
+                        <p class="player-level">Nível: {$top1['warrior'].level}</p>
+                    </li>
+                    {if="$top1['assassin'].job === 5"}
+                    <li class="bg-ranking-home-lycan ninja-m">
+                    {else}
+                    <li class="bg-ranking-home-lycan ninja-f">
+                    {/if}
+                        <p class="player-name">{$top1['assassin'].name}</p>
+                        <p class="player-level">Nível: {$top1['assassin'].level}</p>
+                    </li>
+                    {if="$top1['sura'].job === 2"}
+                    <li class="bg-ranking-home-lycan shura-m">
+                    {else}
+                    <li class="bg-ranking-home-lycan shura-f">
+                    {/if}
+                        <p class="player-name">{$top1['sura'].name}</p>
+                        <p class="player-level">Nível: {$top1['sura'].level}</p>
+                    </li>
+                    {if="$top1['shaman'].job === 7"}
+                    <li class="bg-ranking-home-lycan shaman-m">
+                    {else}
+                    <li class="bg-ranking-home-lycan shaman-f">
+                    {/if}
+                        <p class="player-name">{$top1['shaman'].name}</p>
+                        <p class="player-level">Nível: {$top1['shaman'].level}</p>
+                    </li>
+                    {if="isset($top1['0'])"}
+                    <li class="bg-ranking-home-lycan lycan-m">
+                        <p class="player-name">{$top1['0'].name}</p>
+                        <p class="player-level">Nível: {$top1['0'].level}</p>
+                    </li>
+                    {/if}
+                </ul>
+            </div>
+        </div>
+    </section>
+    <main class="home-container">
+        <div class="home-content">
+            <div class="box-news">
+                <h1 class="home-content-title">Notícias <a href="/news">+</a></h1>
+                <ul class="news-list">
+                    {loop="$listPostHome"}
+                    <li><a href="/post/{$value.id}"><b class="post-type">[{$value.category}]</b>{$value.title}</a> <b class="post-datetime">{function="date('d/m/Y', strtotime($value.date))"}</b></li>
+                    {/loop}
+                </ul>
+            </div>
+            <div class="box-news">
+                <h1 class="home-content-title">Apresentação <a href="/post/1">+</a></h1>
+                <div class="events-slide">
+                    <a href="/post/1">
+                        <p class="event-title">Descubra o {#SERVER_NAME#}!</p>
+                        <img src="/template/default/images/background-top.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
