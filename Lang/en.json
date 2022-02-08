@@ -1,0 +1,71 @@
+{
+    "testes": "testes.",
+    
+    "invalid_username": "Invalid username.",
+    "invalid_password": "Invalid password.",
+    "invalid_match_pw": "Passwords do not match.",
+    "invalid_email": "Invalid email.",
+    "invalid_match_email": "Emails do not match.",
+    "invalid_csrf_token": "Something happened, reload the page and try again.",
+    "username_not_avail": "The chosen username is not available.",
+    "success_register": "Account created successfully!",
+    "generic_err_register": "Failed to create account.",
+    "error_captcha": "Failed to verify captcha.",
+
+    "notfound_user_email": "Username or email incorrect.",
+    "fail_to_update_new_pass": "An error ocurred, try again.",
+    "send_email_error": "Failed to send the email, try again.",
+    "sent_email": "A email has been sent with necessary informations.",
+    "failed_to_get_user_email": "Invalid registered email.",
+
+    "title_new_password": "New Password",
+    "title_social_id": "Character Password",
+    "title_warehouse_pw": "Warehouse Password",
+
+    "generic_login_err": "Username or password invalid.",
+    "user_dont_exist": "User not found.",
+
+    "user_unbanned": "Permanent ban has been removed.",
+    "err_unbann_user": "User has not been unbanned.",
+    "user_perma_ban": "The user has been banned permanent.",
+    "err_user_perma_ban": "Failed to ban the user.",
+    "user_temp_ban": "The user has been banned temporary.",
+    "generic_err_user_ban": "Unknown error.",
+    "cant_login_user_banned": "Account banned till: ",
+    "cant_login_user_banned2": "Account banned.",
+
+    "disabled_register": "Account creation is not active.",
+    "err_max_account_email": "This email already have the max number of accounts.",
+
+    "invalid_user_email": "Current email is incorrect.",
+    "success_change_email": "The email has been changed.",
+    "generic_err_change_email": "Email has not been changed.",
+
+    "success_change_password": "Password has been changed!",
+    "generic_err_change_password": "Password has not been changed.",
+    "wrong_user_pw": "Current password is incorrect.",
+
+    "no_characters_found": "No characters found.",
+    "character_moved": "Character has been moved to the town.",
+    "character_in_town": "Character is already in the town.",
+    "no_character_moved": "No character found to move.",
+
+    "not_posts_found": "No pots found.",
+    "error_insert_new_post": "The post was not created .",
+    "success_update_post": "Post updated successfully.",
+    "failed_update_post": "Post has not been updated.",
+    "post_deleted": "Post deleted.",
+    "err_post_delete": "Post has not been deleted.",
+    "invalid_value": "Invalid amount",
+    "coins_added": " coins added to: ",
+    "err_add_coins": "Failed to insert coins.",
+    
+    "btn_home": "HOME",
+    "btn_register": "NEW ACCOUNT",
+    "btn_my_account": "MY ACCOUNT",
+    "btn_ranking": "RANKINGS",
+    "btn_ranking_player": "PLAYERS",
+    "btn_ranking_guild": "GUILDS",
+    "btn_download": "DOWNLOADS"
+
+}

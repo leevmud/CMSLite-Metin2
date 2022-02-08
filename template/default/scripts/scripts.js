@@ -90,7 +90,7 @@ document.loginForm.onsubmit = async e =>{
 
 function sendFormRegister(){
     const xhr = new XMLHttpRequest()
-    const url = '/criar-conta'
+    const url = '/new-account'
 
     const username = document.querySelector('#username')
     const password = document.querySelector('#password')
@@ -134,7 +134,7 @@ function sendFormLogin(){
             var returned_data = xhr.responseText
             const resultado = JSON.parse(returned_data)
             if(resultado.redirect == true){
-                window.location.href = "/minha-conta"
+                window.location.href = "/my-account"
             }else{
                 setMsg(returned_data)
                 token.value = resultado.__token

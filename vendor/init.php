@@ -1,9 +1,9 @@
 <?php
 //////////////////////////////////////////////////////////////
 //Definições do Banco de Dados
-define('DB_USER', '');
-define('DB_HOST', '');
-define('DB_PASS', '');
+define('DB_USER', 'root');
+define('DB_HOST', 'localhost');
+define('DB_PASS', '5cx2mv43nb');
 define('DB_NAME', 'account');
 define('DB_PORT', '3306');
 define('CHARSET', 'utf8');
