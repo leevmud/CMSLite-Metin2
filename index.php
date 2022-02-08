@@ -1,5 +1,5 @@
 <?php
-//session_set_cookie_params(900, null, null, true, true);
+session_set_cookie_params(900, null, null, true, true);
 session_start();
 
 if(!isset($_SESSION['token']) && empty($_SESSION['token'])){
