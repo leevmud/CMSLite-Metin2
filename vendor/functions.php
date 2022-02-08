@@ -123,7 +123,7 @@ function getPlayerJob($job){
     }
 }
 
-function generateLinksPagination($pAtual, $total, $pagina = 'ranking-jogadores'){
+function generateLinksPagination($pAtual, $total, $pagina = 'ranking-players'){
 
     $prox = $pAtual+1;
     $ant = $pAtual-1;

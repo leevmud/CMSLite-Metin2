@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params(900, null, null, true, true);
+//session_set_cookie_params(900, null, null, true, true);
 session_start();
 
 if(!isset($_SESSION['token']) && empty($_SESSION['token'])){
@@ -29,7 +29,7 @@ $app->get('/', function(){
 
 });
 
-$app->post('/criar-conta', function(){
+$app->post('/new-account', function(){
 
     global $response;
     header('Content-type: application/json');
@@ -94,7 +94,7 @@ $app->post('/login', function(){
 });
 
 
-$app->get('/minha-conta', function(){
+$app->get('/my-account', function(){
     User::isValidLogin();
 
     $page = new Page();
@@ -110,7 +110,7 @@ $app->get('/logout', function(){
     User::logout();
 });
 
-$app->get('/minha-conta/alterar-email', function(){
+$app->get('/my-account/change-email', function(){
     User::isValidLogin();
     $page = new Page();
 
@@ -121,7 +121,7 @@ $app->get('/minha-conta/alterar-email', function(){
 
 });
 
-$app->post('/minha-conta/alterar-email', function(){
+$app->post('/my-account/change-email', function(){
     User::isValidLogin();
 
     if(!empty($_POST)){
@@ -144,11 +144,11 @@ $app->post('/minha-conta/alterar-email', function(){
     }
 
     generateToken();
-    header("Location: /minha-conta/alterar-email");
+    header("Location: /my-account/change-email");
     exit;
 });
 
-$app->get('/minha-conta/alterar-senha', function(){
+$app->get('/my-account/change-password', function(){
     User::isValidLogin();
 
     $page = new Page();
@@ -160,7 +160,7 @@ $app->get('/minha-conta/alterar-senha', function(){
     
 });
 
-$app->post('/minha-conta/alterar-senha', function(){
+$app->post('/my-account/change-password', function(){
     User::isValidLogin();
 
     if(!empty($_POST)){
@@ -183,11 +183,11 @@ $app->post('/minha-conta/alterar-senha', function(){
     }
 
     generateToken();
-    header("Location: /minha-conta/alterar-senha");
+    header("Location: /my-account/change-password");
     exit;
 });
 
-$app->get('/minha-conta/desbugar-personagem', function(){
+$app->get('/my-account/unbug-char', function(){
     User::isValidLogin();
     
     $page = new Page();
@@ -201,12 +201,12 @@ $app->get('/minha-conta/desbugar-personagem', function(){
 
 });
 
-$app->get('/minha-conta/desbugar-personagem/:id', function($id){
+$app->get('/my-account/unbug-char/:id', function($id){
     User::isValidLogin();
 
     User::moveCharacter($id);
 
-    header("Location: /minha-conta/desbugar-personagem");
+    header("Location: /my-account/unbug-char");
     exit;
 
 });
@@ -431,7 +431,7 @@ $app->get('/news', function(){
 });
 
 
-$app->get('/ranking-jogadores', function(){
+$app->get('/ranking-players', function(){
     $page = new Page();
 
     $paginaAtual = (isset($_GET['p'])) ? (int)$_GET['p'] : 1;
@@ -449,7 +449,7 @@ $app->get('/ranking-jogadores', function(){
     ]);
 });
 
-$app->get('/ranking-guildas', function(){
+$app->get('/ranking-guilds', function(){
     $page = new Page();
 
     $paginaAtual = (isset($_GET['p'])) ? (int)$_GET['p'] : 1;
@@ -472,7 +472,7 @@ $app->get('/downloads', function(){
     $page->setTpl('downloads');
 });
 
-$app->get("/recuperar-senha", function(){
+$app->get("/forgot-password", function(){
  
     $page = new Page();
 
@@ -481,7 +481,7 @@ $app->get("/recuperar-senha", function(){
     ]);
 });
 
-$app->get("/minha-conta/senha-armazem", function(){
+$app->get("/my-account/warehouse-pw", function(){
     User::isValidLogin();
 
     $newWarehousePW = generateWarehousePW();
@@ -493,11 +493,11 @@ $app->get("/minha-conta/senha-armazem", function(){
 
     User::sendWarehousePW($newWarehousePW, $emailBody);
     
-    header("Location: /minha-conta");
+    header("Location: /my-account");
     exit;
 });
 
-$app->get("/minha-conta/cod-apagar-personagem", function(){
+$app->get("/my-account/char-pw", function(){
     User::isValidLogin();
     
     $newSocialID = generateSocialID();
@@ -509,11 +509,11 @@ $app->get("/minha-conta/cod-apagar-personagem", function(){
 
     User::sendSocialID($newSocialID, $emailBody);
 
-    header("Location: /minha-conta");
+    header("Location: /my-account");
     exit;
 });
 
-$app->post("/recuperar-senha", function(){
+$app->post("/forgot-password", function(){
  
     if(!empty($_POST)){
         $username = isValidUsername($_POST['login']);
@@ -538,7 +538,7 @@ $app->post("/recuperar-senha", function(){
         }
     }
 
-    header("Location: /recuperar-senha");
+    header("Location: /forgot-password");
     exit;
 });
 
