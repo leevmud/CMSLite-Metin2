@@ -27,4 +27,4 @@ INSERT INTO `cmsnews` VALUES (4, 'Notícias', 'Trabalhe Conosco', '&lt;h1 style=
 SET FOREIGN_KEY_CHECKS = 1;
 
 ALTER TABLE account ADD web_admin int(11);
-ALTER TABLE account ADD register_ip int(11);
+ALTER TABLE account ADD register_ip varchar(255);
