@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
     <div class="form-content" >
         <h1 class="home-content-title">Nova Conta</h1><span>Já possui uma conta?</span><a class="btn-login" tabindex="0">Faça Login!</a>
         <i class="fas fa-times"></i>

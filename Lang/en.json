@@ -53,6 +53,7 @@
     "not_posts_found": "No pots found.",
     "error_insert_new_post": "The post was not created .",
     "success_update_post": "Post updated successfully.",
+    "success_create_post": "Post created successfully.",
     "failed_update_post": "Post has not been updated.",
     "post_deleted": "Post deleted.",
     "err_post_delete": "Post has not been deleted.",

@@ -9,13 +9,13 @@ class Ranking{
         $conn = new Database(); 
 
         if(LYCAN === true){
-            $lycan = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job = 8 AND player.name NOT LIKE "[%]%" ORDER BY playtime DESC LIMIT 1');
+            $lycan = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job = 8 AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
         }
         
-        $warrior = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (0, 4) AND player.name NOT LIKE "[%]%" ORDER BY playtime DESC LIMIT 1');
-        $assassin = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (1, 5) AND player.name NOT LIKE "[%]%" ORDER BY playtime DESC LIMIT 1');
-        $sura = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (2, 6) AND player.name NOT LIKE "[%]%" ORDER BY playtime DESC LIMIT 1');
-        $shaman = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (3, 7) AND player.name NOT LIKE "[%]%" ORDER BY playtime DESC LIMIT 1');
+        $warrior = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (0, 4) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $assassin = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (1, 5) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $sura = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (2, 6) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $shaman = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (3, 7) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
 
         if(!isset($warrior[0])){
             $warrior[0] = [

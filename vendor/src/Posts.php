@@ -35,6 +35,7 @@ class Posts{
         ]);
 
         if($result > 0){
+            User::setMsg([Translate::text('success_create_post'), 'success']);
             return true;
         }
 
@@ -62,11 +63,13 @@ class Posts{
     public static function showPost($id){
         $conn = new Database();
 
-        $result = $conn->select("SELECT id, category, title, content, date FROM ".ACCOUNT_DB.".cmsnews WHERE id = :ID", [
+        $result = $conn->select("SELECT id, category, title, content, date, deleted FROM ".ACCOUNT_DB.".cmsnews WHERE id = :ID", [
             ":ID" => $id
         ]);
 
         if(count($result) > 0){
+            //@fix - user could see deleted posts
+            if($result[0]['deleted'] === 0)
             return $result[0];
         }
 

@@ -9,7 +9,6 @@ class Page{
     private $tpl;
 
     public function __construct(){
-        global $header;
 
         $config = array(
             "tpl_dir" => TPL_DIR,
@@ -20,11 +19,9 @@ class Page{
             "text" => new Translate()
         ];
 
-        $header = array_merge($header, $translate);
-
         Tpl::configure($config);
         $this->tpl = new Tpl;
-        $this->setTpl('header', $header);
+        $this->setTpl('header', $translate);
     }
 
     public function setData($data = array()){

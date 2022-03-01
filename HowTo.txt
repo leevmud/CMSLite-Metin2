@@ -1,0 +1,27 @@
+Localhost 
+1 -> Open '/vendor/init.php' and set your DB user, host and password.
+2 -> Run the 'query.sql' file in your 'account' database.
+3 -> voilà.
+
+/////////////////////////////////////////////////////////////////////
+
+(If you are using Nginx check Slim Framework how to use rewrite module for routes.)
+
+Live
+1-> The same steps above.
+2-> Enable SSL in your Host.
+3-> Get your Google reCaptcha keys.
+4-> Set your Google reCaptcha keys in '/vendor/init.php'.
+5-> Set 'ENABLE_CAPTCHA' to 'true'.
+6-> Remove '//' in 'index.php' line 2 (session_set_cookie_params)
+7-> (Apache Only) Remove '#' in .htaccess to redirect your site to SSL/TSL.
+8-> voilà.
+
+////////////////////////////////////////////////////////////////////
+
+-> To change server responses open the Lang folder and edit the lang files.
+-> To change HTML texts/links... open 'template/default/filename.html'.
+-> To grant admin rights set 'web_admin' to 1 in account.account
+
+
+Discord: Hazel#4067

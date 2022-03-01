@@ -10,9 +10,8 @@ class User{
         $conn = new Database();
 
         if(ENABLE_REGISTER === false){
-            return array(
-                "msg" => Translate::text('disabled_register')
-            );
+            User::setMsg([Translate::text('disabled_register'), 'failed']);
+            return false;
         }
 
         if(ENABLE_MAX_ACCOUNTS_PER_EMAIL === true){
@@ -21,9 +20,8 @@ class User{
             ]);
 
             if($countEmails >= MAX_ACCOUNTS_PER_EMAIL){
-                return array(
-                    "msg" => Translate::text('err_max_account_email')
-                );
+                User::setMsg([Translate::text('err_max_account_email'), 'failed']);
+                return false;
             }
         }
        
@@ -32,9 +30,8 @@ class User{
         ]);
         
         if($result > 0){
-            return array(
-                "msg" => Translate::text('username_not_avail')
-            );
+            User::setMsg([Translate::text('username_not_avail'), 'failed']);
+            return false;
         }else{
             $result = $conn->count("INSERT INTO ".ACCOUNT_DB.".account (login, password, email, create_time, register_ip) VALUES (:USERNAME, :PASSWORD, :EMAIL, NOW(), :IP)",[
                 ":USERNAME" => $username,
@@ -44,15 +41,12 @@ class User{
             ]);
 
             if($result > 0){
-                return array(
-                    "msg" => Translate::text('success_register'),
-                    "type" => "success-create"
-                );
+                User::setMsg([Translate::text('success_register'), 'success']);
+                return true;
             }else{
                 //??
-                return array(
-                    "msg" => Translate::text('generic_err_register')
-                );
+                User::setMsg([Translate::text('generic_err_register'), 'failed']);
+                return false;
             }
         }
     }
@@ -66,12 +60,15 @@ class User{
                 ":LOGIN" => $username
             ]);
 
+            //@fix - error invalid-user
+            if(empty($getBanTime)){
+                User::setMsg([Translate::text('generic_login_err'), 'failed']);
+                return false;
+            }
+
             if($getBanTime[0]['status'] == 'BAN'){
-                generateToken(); 
-                return array(
-                    "msg" => Translate::text('cant_login_user_banned2'),
-                    "__token" => $_SESSION['token']
-                );
+                User::setMsg([Translate::text('cant_login_user_banned2'), 'failed']);
+                return false;
             }
 
             $banTimestamp = strtotime($getBanTime[0]['availDt']);
@@ -80,13 +77,9 @@ class User{
             if($banTimestamp > $currentTimestamp){
                 
                 $waitTime = (new \DateTime($getBanTime[0]['availDt']))->format('d/m/Y H:i:s');
-    
-                generateToken(); 
-                return array(
-                    "msg" => Translate::text('cant_login_user_banned')."$waitTime",
-                    "__token" => $_SESSION['token']
-                );
 
+                User::setMsg([Translate::text('cant_login_user_banned2'."$waitTime"), 'failed']);
+                return false;
             }
         }
         
@@ -96,28 +89,19 @@ class User{
 
         if(count($result) > 0){
             if($result[0]['password'] !== hashPassword($password)){
-                generateToken(); 
-                return array(
-                    "msg" => Translate::text('generic_login_err'),
-                    "__token" => $_SESSION['token']
-                );
+
+                User::setMsg([Translate::text('generic_login_err'), 'failed']);
+                return false;
+                
             }else{
                 //Let's Login!
                 $_SESSION['id'] = $result[0]['id'];
                 $_SESSION['username'] = $result[0]['login'];
-                
-                generateToken(); 
-                return array(
-                    "redirect" => true,
-                );
+                return true;
             }
         }else{
-            //??
-            generateToken(); 
-            return array(
-                "msg" => Translate::text('generic_login_err'),
-                "__token" => $_SESSION['token']
-            );
+            User::setMsg([Translate::text('generic_login_err'), 'failed']);
+            return false;
         }
     }
 

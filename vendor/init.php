@@ -22,6 +22,7 @@ define('MAX_ACCOUNTS_PER_EMAIL', 3); //Quantidade máxima de contas por e-mail
 define('ENABLE_REGISTER', true);//Ativa a criação de contas
 
 //Defina as chaves do google reCaptcha para evitar ataques no site.
+define('ENABLE_CAPTCHA', false);
 define('PUBLIC_KEY', '');//
 define('PRIVATE_KEY', '');//
 
@@ -34,10 +35,6 @@ define('SERVER_LANG', 'pt-br');//Define o idioma das respostas do servidor e HTM
 
 //////////////////////////////////////////////////////////////
 //Definições do Header e Footer
-$header = [
-    "csrf_token" => $_SESSION['token']
-];
-
 $footer = [
     "textCopyright" => "&copy; ".date('Y '). SERVER_NAME . ". O logotipo do ". SERVER_NAME ." é marca registrada da Webzen Inc."
 ];
@@ -62,13 +59,6 @@ define('TPL_CACHE', $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'template_cach
 
 define('APP_LANG', $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'Lang'.DIRECTORY_SEPARATOR);
 
-//////////////////////////////////////////////////////////////
-//Definição de Mensagens (Retorna como JSON) - Não é necessário alterações
-$response = [
-    'msg' => 'Erro tente novamente ou entre em contato com o administrador do sistema.',
-    'type' => 'failed-create',
-    'redirect' => false
-];
 
 //////////////////////////////////////////////////////////////
 //Configurações do Servidor de E-mail

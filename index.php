@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params(900, null, null, true, true);
+// session_set_cookie_params(900, null, null, true, true);
 session_start();
 
 if(!isset($_SESSION['token']) && empty($_SESSION['token'])){
@@ -29,10 +29,15 @@ $app->get('/', function(){
 
 });
 
-$app->post('/new-account', function(){
+$app->get('/new-account', function(){
+    $page = new Page();
 
-    global $response;
-    header('Content-type: application/json');
+    $page->setTpl('new-account', [
+        "result" => User::getMsg()
+    ]);
+});
+
+$app->post('/new-account', function(){
     
     if(!empty($_POST)){
 
@@ -41,56 +46,63 @@ $app->post('/new-account', function(){
         $email = isValidEmail($_POST['email']);
     
         if(!$username){
-            $response['msg'] = Translate::text('invalid_username');
+            User::setMsg([Translate::text('invalid_username'), 'failed']);
         }elseif(!$password){
-            $response['msg'] = Translate::text('invalid_password');
+            User::setMsg([Translate::text('invalid_password'), 'failed']);
         }elseif(hashPassword($_POST['re-password']) !== hashPassword($password)){
-            $response['msg'] = Translate::text('invalid_match_pw');
+            User::setMsg([Translate::text('invalid_match_pw'), 'failed']);
         }elseif(!$email){
-            $response['msg'] = Translate::text('invalid_email');
+            User::setMsg([Translate::text('invalid_email'), 'failed']);
         }elseif($_POST['re-email'] !== $email){
-            $response['msg'] = Translate::text('invalid_match_email');
+            User::setMsg([Translate::text('invalid_match_email'), 'failed']);
         }elseif($_POST['accept'] !== 'on'){
-            $response['msg'] = Translate::text('invalidCheckBoxRegister');
-        }elseif(!verifyCaptcha($_POST['gcaptcha'])){
-            $response['msg'] = Translate::text('error_captcha');
+            User::setMsg([Translate::text('invalidCheckBoxRegister'), 'failed']);
+        }elseif(!verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+            User::setMsg([Translate::text('error_captcha'), 'failed']);
         }else{
-            $result = User::register($username, $password, $email);
-            $response = array_merge($response, $result);
+            User::register($username, $password, $email);
         }
     }
-    
-    echo json_encode($response);
+    header('Location: /new-account');
+    exit;
 
+});
+
+$app->get('/login', function(){
+    $page = new Page();
+
+    $page->setTpl('login', [
+        "result" => User::getMsg(),
+        "csrf_token" => $_SESSION['token']
+    ]);
+    
 });
 
 $app->post('/login', function(){
 
-    global $response;
-    header('Content-type: application/json');
-    
     if(!empty($_POST)){
-        $username = isValidUsername($_POST['username']);
+        $username = isValidUsername($_POST['login']);
         $password = isValidPassword($_POST['password']);
         
         if(!$username){
-            $response['msg'] = Translate::text('invalid_username');
+            User::setMsg([Translate::text('invalid_username'), 'failed']);
         }elseif(!$password){
-            $response['msg'] = Translate::text('invalid_password');
+            User::setMsg([Translate::text('invalid_password'), 'failed']);
         }elseif(!hash_equals($_SESSION['token'], $_POST['token'])){
-            $response['msg'] = Translate::text('invalid_csrf_token');
-        }elseif(!verifyCaptcha($_POST['gcaptcha'])){
-            $response['msg'] = Translate::text('error_captcha');
-            generateToken();
-            $response['__token'] = $_SESSION['token'];
+            User::setMsg([Translate::text('invalid_csrf_token'), 'failed']);
+        }elseif(!verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+            User::setMsg([Translate::text('error_captcha'), 'failed']);
         }else{
-            $result = User::login($username, $password);
-            $response = array_merge($response, $result);
-            
+            if(User::login($username, $password)){
+                generateToken();
+                header('Location: /my-account');
+                exit;
+            }
         }
     }
-
-    echo json_encode($response);
+    generateToken();
+    header('Location: /login');
+    exit;
 });
 
 
@@ -531,7 +543,7 @@ $app->post("/forgot-password", function(){
             User::setMsg([Translate::text("invalid_username"), "failed"]);
         }elseif(!$email){
             User::setMsg([Translate::text("invalid_email"), "failed"]);
-        }elseif(!verifyCaptcha($_POST['g-recaptcha-response'])){
+        }elseif(!verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
             User::setMsg([Translate::text("error_captcha"), "failed"]);
         }else{
             User::recoverPassword($username, $email, $emailBody, $novaSenha);
