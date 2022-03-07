@@ -57,7 +57,7 @@ $app->post('/new-account', function(){
             User::setMsg([Translate::text('invalid_match_email'), 'failed']);
         }elseif($_POST['accept'] !== 'on'){
             User::setMsg([Translate::text('invalidCheckBoxRegister'), 'failed']);
-        }elseif(!verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+        }elseif(isset($_POST['g-recaptcha-response']) && !verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
             User::setMsg([Translate::text('error_captcha'), 'failed']);
         }else{
             User::register($username, $password, $email);
@@ -90,7 +90,7 @@ $app->post('/login', function(){
             User::setMsg([Translate::text('invalid_password'), 'failed']);
         }elseif(!hash_equals($_SESSION['token'], $_POST['token'])){
             User::setMsg([Translate::text('invalid_csrf_token'), 'failed']);
-        }elseif(!verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+        }elseif(isset($_POST['g-recaptcha-response']) && !verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
             User::setMsg([Translate::text('error_captcha'), 'failed']);
         }else{
             if(User::login($username, $password)){
@@ -543,7 +543,7 @@ $app->post("/forgot-password", function(){
             User::setMsg([Translate::text("invalid_username"), "failed"]);
         }elseif(!$email){
             User::setMsg([Translate::text("invalid_email"), "failed"]);
-        }elseif(!verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+        }elseif(isset($_POST['g-recaptcha-response']) && !verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
             User::setMsg([Translate::text("error_captcha"), "failed"]);
         }else{
             User::recoverPassword($username, $email, $emailBody, $novaSenha);
