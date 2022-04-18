@@ -3,11 +3,15 @@
     margin: 0;
 }
 
+html{
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Josefin Sans', sans-serif;
     background-color: #131118;
     position: relative;
-    background-image: url('/template/default/images/background-top.png');
+    background-image: url('/template/default/images/background-top.webp');
     background-repeat: no-repeat;
     background-size: 100%;
 }
@@ -107,7 +111,7 @@ a{
     height:75px;
     border-radius: 0;
     border: none;
-    background-image: url('/template/default/images/criar-conta.png');
+    background-image: url('/template/default/images/criar-conta.webp');
     position: absolute;
     bottom: 20px;
     left: 150px;
@@ -115,7 +119,7 @@ a{
 }
 
 #btn-send-form-login{
-    background-image: url('/template/default/images/Entrar.png');
+    background-image: url('/template/default/images/Entrar.webp');
 }
 
 a.tip {
@@ -318,7 +322,7 @@ nav .menu .submenu{
 
 .section-title{
     height: 77px;
-    background-image: url('/template/default/images/bg-title.png');
+    background-image: url('/template/default/images/bg-title.webp');
     font-family: 'Cinzel', serif;
     text-align: center;
 }
@@ -358,7 +362,7 @@ nav .menu .submenu{
 }
 
 .bg-ranking-home-lycan{
-    background-image: url('/template/default/images/class-icon.png');
+    background-image: url('/template/default/images/class-icon.webp');
     background-size: 1080px 425px;
     background-repeat: no-repeat;
     position: relative;
@@ -455,7 +459,7 @@ nav .menu .submenu{
 
 .home-container{
     min-height: 415px;
-    background-image: url('/template/default/images/bg-news.jpg');
+    background-image: url('/template/default/images/bg-news.webp');
     background-repeat: repeat-y;
     background-size: cover;
     background-position-y: -50px;

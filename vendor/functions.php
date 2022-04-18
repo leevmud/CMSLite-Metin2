@@ -81,44 +81,44 @@ function getPlayerJob($job){
 
     switch ($job) {
         case 0:
-            echo '<img style="width:20%;" src="/template/default/images/icons/0.png" alt="Guerreiro-M">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/0.webp" alt="Guerreiro-M">';
             break;
         
         case 1:
-            echo '<img style="width:20%;" src="/template/default/images/icons/1.png" alt="Ninja-F">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/1.webp" alt="Ninja-F">';
             break;
 
         case 2:
-            echo '<img style="width:20%;" src="/template/default/images/icons/2.png" alt="Shura-M">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/2.webp" alt="Shura-M">';
             break;
         
         case 3:
-            echo '<img style="width:20%;" src="/template/default/images/icons/3.png" alt="Shaman-F">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/3.webp" alt="Shaman-F">';
             break;
 
         case 4:
-            echo '<img style="width:20%;" src="/template/default/images/icons/4.png" alt="Guerreiro-F">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/4.webp" alt="Guerreiro-F">';
             break;
             
         case 5:
-            echo '<img style="width:20%;" src="/template/default/images/icons/5.png" alt="Ninja-M">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/5.webp" alt="Ninja-M">';
             break;
 
         case 6:
-            echo '<img style="width:20%;" src="/template/default/images/icons/6.png" alt="Shura-F">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/6.webp" alt="Shura-F">';
             break;
 
         case 7:
-            echo '<img style="width:20%;" src="/template/default/images/icons/7.png" alt="Shaman-M">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/7.webp" alt="Shaman-M">';
             break;    
         
         case 8:
-            echo '<img style="width:20%;" src="/template/default/images/icons/8.png" alt="Lycan">';
+            echo '<img style="width:20%;" src="/template/default/images/icons/8.webp" alt="Lycan">';
             break; 
 
         
         default:
-        echo '<img style="width:20%;" src="/template/default/images/icons/0.png" alt="">';
+        echo '<img style="width:20%;" src="/template/default/images/icons/0.webp" alt="">';
             break;
     }
 }
