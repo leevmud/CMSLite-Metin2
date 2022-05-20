@@ -6,6 +6,7 @@ if(!isset($_SESSION['token']) && empty($_SESSION['token'])){
     $_SESSION['token'] = bin2hex(random_bytes(24));
 }
 require_once('vendor/autoload.php');
+require_once ('vendor/functions.php');
 
 use CMSLite\Page;
 use CMSLite\User;
@@ -16,6 +17,18 @@ use CMSLite\Posts;
 use CMSLite\Ranking;
 use CMSLite\Statistics;
 use CMSLite\Mailer;
+
+try {
+    Database::connect();
+} catch (PDOException $e) {
+    $page = new Page([
+        "header" => false,
+        "footer" => false
+    ]);
+
+    $page->setTpl('offline');//template/default/offline.html
+    exit;
+}
 
 $app = new \Slim\Slim();
 
@@ -150,6 +163,8 @@ $app->post('/my-account/change-email', function(){
             User::setMsg([Translate::text('invalid_match_email'), "failed"]);
         }elseif(!hash_equals($_SESSION['token'], $_POST['__token'])){
             User::setMsg([Translate::text('invalid_csrf_token'), "failed"]);
+        }elseif(isset($_POST['g-recaptcha-response']) && !verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+            User::setMsg([Translate::text("error_captcha"), "failed"]);
         }else{
             User::changeEmail($newEmail);
         }
@@ -189,6 +204,8 @@ $app->post('/my-account/change-password', function(){
             User::setMsg([Translate::text('invalid_match_pw'), "failed"]);
         }elseif(!hash_equals($_POST['__token'], $_SESSION['token'])){
             User::setMsg([Translate::text('invalid_csrf_token'), "failed"]);
+        }elseif(isset($_POST['g-recaptcha-response']) && !verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
+            User::setMsg([Translate::text("error_captcha"), "failed"]);
         }else{
             User::changePassword($newPassword);
         }
@@ -447,6 +464,7 @@ $app->get('/ranking-players', function(){
     $page = new Page();
 
     $paginaAtual = (isset($_GET['p'])) ? (int)$_GET['p'] : 1;
+    $paginaAtual = $paginaAtual < 1 ? 1 : $paginaAtual;
 
     $ranking = Ranking::rankingWithPagination($paginaAtual);
 
@@ -465,6 +483,7 @@ $app->get('/ranking-guilds', function(){
     $page = new Page();
 
     $paginaAtual = (isset($_GET['p'])) ? (int)$_GET['p'] : 1;
+    $paginaAtual = $paginaAtual < 1 ? 1 : $paginaAtual;
 
     $ranking = Ranking::guildWithPagination($paginaAtual);
 
@@ -496,6 +515,15 @@ $app->get("/forgot-password", function(){
 $app->get("/my-account/warehouse-pw", function(){
     User::isValidLogin();
 
+    $currentTime = (new DateTime())->getTimeStamp();
+    $timeInMin = (new DateTime("+".MAIL_TIMER." minutes"))->getTimeStamp();
+
+    if(isset($_SESSION['mail_timer']) && $_SESSION['mail_timer'] > $currentTime){
+        User::setMsg([Translate::text('send_email_timer'), "failed"]);
+        header("Location: /my-account");
+        exit;
+    }
+
     $newWarehousePW = generateWarehousePW();
 
     $emailBody = file_get_contents(EMAIL_TPL."send-warehousepw.html");
@@ -503,6 +531,7 @@ $app->get("/my-account/warehouse-pw", function(){
     $emailBody = str_replace("#senha#", $newWarehousePW, $emailBody);
     $emailBody = str_replace("#server_link#", $_SERVER['SERVER_NAME'], $emailBody);
 
+    $_SESSION['mail_timer'] = $timeInMin;
     User::sendWarehousePW($newWarehousePW, $emailBody);
     
     header("Location: /my-account");
@@ -511,6 +540,15 @@ $app->get("/my-account/warehouse-pw", function(){
 
 $app->get("/my-account/char-pw", function(){
     User::isValidLogin();
+
+    $currentTime = (new DateTime())->getTimeStamp();
+    $timeInMin = (new DateTime("+".MAIL_TIMER." minutes"))->getTimeStamp();
+
+    if(isset($_SESSION['mail_timer']) && $_SESSION['mail_timer'] > $currentTime){
+        User::setMsg([Translate::text('send_email_timer'), "failed"]);
+        header("Location: /my-account");
+        exit;
+    }
     
     $newSocialID = generateSocialID();
     
@@ -519,6 +557,8 @@ $app->get("/my-account/char-pw", function(){
     $emailBody = str_replace("#senha#", $newSocialID, $emailBody);
     $emailBody = str_replace("#server_link#", $_SERVER['SERVER_NAME'], $emailBody);
 
+    $_SESSION['mail_timer'] = $timeInMin;
+
     User::sendSocialID($newSocialID, $emailBody);
 
     header("Location: /my-account");
@@ -526,6 +566,15 @@ $app->get("/my-account/char-pw", function(){
 });
 
 $app->post("/forgot-password", function(){
+
+    $currentTime = (new DateTime())->getTimeStamp();
+    $timeInMin = (new DateTime("+".MAIL_TIMER." minutes"))->getTimeStamp();
+
+    if(isset($_SESSION['mail_timer']) && $_SESSION['mail_timer'] > $currentTime){
+        User::setMsg([Translate::text('send_email_timer'), "failed"]);
+        header("Location: /my-account");
+        exit;
+    }
  
     if(!empty($_POST)){
         $username = isValidUsername($_POST['login']);
@@ -546,6 +595,7 @@ $app->post("/forgot-password", function(){
         }elseif(isset($_POST['g-recaptcha-response']) && !verifyCaptcha($_POST['g-recaptcha-response']) && ENABLE_CAPTCHA){
             User::setMsg([Translate::text("error_captcha"), "failed"]);
         }else{
+            $_SESSION['mail_timer'] = $timeInMin;
             User::recoverPassword($username, $email, $emailBody, $novaSenha);
         }
     }

@@ -17,6 +17,7 @@
                         <input type="email" id="novoEmail" name="novoEmail" placeholder="Novo e-mail" autocomplete="off" required><a class="tip" tabindex="-1"> ?<span>- E-mail precisa ser válido. <br><br>- Permitido apenas domínios de e-mail conhecidos.</span></a><br>
                         <input type="email" id="re-novoEmail" name="re-novoEmail" placeholder="Repita o novo e-mail" autocomplete="off" required><br>
                         <input type="hidden" name="__token" value="{$csrf_token}">
+                        <div class="g-recaptcha captcha-register" data-sitekey="{#PUBLIC_KEY#}" data-theme="dark"></div>
                         <button onclick="return confirm('Alterar E-mail?')">Alterar e-mail</button>
                     </form>
                 </div>

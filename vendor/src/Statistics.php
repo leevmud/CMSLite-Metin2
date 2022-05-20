@@ -59,17 +59,15 @@ class Statistics{
     }
 
     public static function getStatistics($interval = 24){
-        $conn = new Database();
-
-        $playersIn24h = $conn->count('SELECT * FROM '.PLAYER_DB.'.player WHERE DATE_SUB(NOW(), INTERVAL :INTERVAL HOUR) < last_play', [
+        $playersIn24h = Database::count('SELECT * FROM '.PLAYER_DB.'.player WHERE DATE_SUB(NOW(), INTERVAL :INTERVAL HOUR) < last_play', [
             ":INTERVAL" => $interval
         ]);
-        $totalAccount = $conn->count('SELECT * FROM '.ACCOUNT_DB.'.account');
-        $totalCharacters = $conn->count('SELECT * FROM '.PLAYER_DB.'.player');
-        $totalGuilds = $conn->count('SELECT * FROM '.PLAYER_DB.'.guild');
+        $totalAccount = Database::count('SELECT * FROM '.ACCOUNT_DB.'.account');
+        $totalCharacters = Database::count('SELECT * FROM '.PLAYER_DB.'.player');
+        $totalGuilds = Database::count('SELECT * FROM '.PLAYER_DB.'.guild');
 
         if(!USE_REAL_TIME_ONLINE_PLAYERS){
-            $onlinePlayers = $conn->count('SELECT * FROM '.PLAYER_DB.'.player WHERE DATE_SUB(NOW(), INTERVAL :INTERVAL MINUTE) < last_play', [
+            $onlinePlayers = Database::count('SELECT * FROM '.PLAYER_DB.'.player WHERE DATE_SUB(NOW(), INTERVAL :INTERVAL MINUTE) < last_play', [
                 ":INTERVAL" => 5
             ]);
         }else{

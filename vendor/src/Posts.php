@@ -7,11 +7,9 @@ use CMSLite\User;
 class Posts{
 
     public static function newPost($category, $title, $content, $id = 0){
-        $conn = new Database();
-
         //Update post
         if($id !== 0){
-            $update = $conn->count("UPDATE ".ACCOUNT_DB.".cmsnews SET category = :CATEGORY, title = :TITLE, content = :CONTENT WHERE id = :ID", [
+            $update = Database::count("UPDATE ".ACCOUNT_DB.".cmsnews SET category = :CATEGORY, title = :TITLE, content = :CONTENT WHERE id = :ID", [
                 ":CATEGORY" => $category,
                 ":TITLE" => $title,
                 ":CONTENT" => $content,
@@ -27,7 +25,7 @@ class Posts{
             }
         }
 
-        $result = $conn->count("INSERT INTO ".ACCOUNT_DB.".cmsnews (category, title, content, date, author) VALUES (:CATEGORY, :TITLE, :CONTENT, NOW(), :AUTHOR)", [
+        $result = Database::count("INSERT INTO ".ACCOUNT_DB.".cmsnews (category, title, content, date, author) VALUES (:CATEGORY, :TITLE, :CONTENT, NOW(), :AUTHOR)", [
             ":CATEGORY" => $category,
             ":TITLE" => $title,
             ":CONTENT" => $content,
@@ -45,9 +43,7 @@ class Posts{
     }
 
     public static function getPosts($limit = 100){
-        $conn = new Database();
-
-        $result = $conn->select("SELECT * FROM ".ACCOUNT_DB.".cmsnews WHERE deleted = 0 ORDER BY id DESC LIMIT :LIMIT",[
+        $result = Database::select("SELECT * FROM ".ACCOUNT_DB.".cmsnews WHERE deleted = 0 ORDER BY id DESC LIMIT :LIMIT",[
             ":LIMIT" => $limit
         ]);
 
@@ -61,9 +57,7 @@ class Posts{
     }
 
     public static function showPost($id){
-        $conn = new Database();
-
-        $result = $conn->select("SELECT id, category, title, content, date, deleted FROM ".ACCOUNT_DB.".cmsnews WHERE id = :ID", [
+        $result = Database::select("SELECT id, category, title, content, date, deleted FROM ".ACCOUNT_DB.".cmsnews WHERE id = :ID", [
             ":ID" => $id
         ]);
 
@@ -78,9 +72,7 @@ class Posts{
     }
 
     public static function deletePost($id){
-        $conn = new Database();
-
-        $result = $conn->count("UPDATE ".ACCOUNT_DB.".cmsnews SET deleted = 1 WHERE id = :ID",[
+        $result = Database::count("UPDATE ".ACCOUNT_DB.".cmsnews SET deleted = 1 WHERE id = :ID",[
             ":ID" => $id
         ]);
 

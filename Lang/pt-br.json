@@ -60,6 +60,8 @@
     "invalid_value": "Quantidade inválida",
     "coins_added": " moedas foram adicionadas ao usuário: ",
     "err_add_coins": "Ocorreu um erro ao adicionar as moedas.",
+
+    "send_email_timer": "Você não pode enviar um e-mail agora, tente novamente mais tarde.",
     
     "btn_home": "INICIO",
     "btn_register": "CRIAR CONTA",

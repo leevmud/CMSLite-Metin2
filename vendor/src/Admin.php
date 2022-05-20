@@ -8,14 +8,13 @@ use CMSLite\Translate;
 class Admin{
 
     public static function banAccount($login, $banTime){
-        $conn = new Database();
-        $isBan = $conn->select("SELECT status, availDt FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
+        $isBan = Database::select("SELECT status, availDt FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
             ":LOGIN" => $login
         ]);
 
         if($isBan[0]['status'] === 'BAN'){
             //Desbloqueio da conta
-            $unBann = $conn->count("UPDATE ".ACCOUNT_DB.".account SET status = 'OK' WHERE login = :LOGIN", [
+            $unBann = Database::count("UPDATE ".ACCOUNT_DB.".account SET status = 'OK' WHERE login = :LOGIN", [
                 ":LOGIN" => $login
             ]);
 
@@ -29,7 +28,7 @@ class Admin{
 
         }elseif($isBan[0]['status'] === 'OK' && $banTime === 0){
             //Bloqueio permanente da conta
-            $permBanUser = $conn->count("UPDATE ".ACCOUNT_DB.".account SET status = 'BAN' WHERE login = :LOGIN", [
+            $permBanUser = Database::count("UPDATE ".ACCOUNT_DB.".account SET status = 'BAN' WHERE login = :LOGIN", [
                 ":LOGIN" => $login
             ]);
 
@@ -42,7 +41,7 @@ class Admin{
             }
         }elseif($isBan[0]['status'] === 'OK' && $banTime !== 0){
             //Bloqueio temporario
-            $tempBanUser = $conn->count("UPDATE ".ACCOUNT_DB.".account SET availDt = :TIME WHERE login = :LOGIN", [
+            $tempBanUser = Database::count("UPDATE ".ACCOUNT_DB.".account SET availDt = :TIME WHERE login = :LOGIN", [
                 ":LOGIN" => $login,
                 ":TIME" => $banTime
             ]);
@@ -62,9 +61,7 @@ class Admin{
     }
 
     public static function userExist($login){
-        $conn = new Database();
-
-        $result = $conn->count("SELECT login FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
+        $result = Database::count("SELECT login FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
             ":LOGIN" => $login
         ]);
         
@@ -76,9 +73,7 @@ class Admin{
     }
 
     public static function insertCoins($login, $coins){
-        $conn = new Database();
-
-        $result = $conn->count("UPDATE ".ACCOUNT_DB.".account SET ".COINS." = ".COINS." + :QTD WHERE login = :LOGIN", [
+        $result = Database::count("UPDATE ".ACCOUNT_DB.".account SET ".COINS." = ".COINS." + :QTD WHERE login = :LOGIN", [
             ":LOGIN" => $login,
             ":QTD" => $coins
         ]);

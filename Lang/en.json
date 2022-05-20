@@ -60,6 +60,8 @@
     "invalid_value": "Invalid amount",
     "coins_added": " coins added to: ",
     "err_add_coins": "Failed to insert coins.",
+
+    "send_email_timer": "You can't send another email right now, try again later.",
     
     "btn_home": "HOME",
     "btn_register": "NEW ACCOUNT",

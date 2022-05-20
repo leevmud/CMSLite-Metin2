@@ -7,8 +7,12 @@ use CMSLite\Statistics;
 
 class Page{
     private $tpl;
+    private $options = [
+        "header" => true,
+        "footer" => true
+    ];
 
-    public function __construct(){
+    public function __construct($opts = array()){
 
         $config = array(
             "tpl_dir" => TPL_DIR,
@@ -21,7 +25,12 @@ class Page{
 
         Tpl::configure($config);
         $this->tpl = new Tpl;
-        $this->setTpl('header', $translate);
+
+        $this->options = array_merge($this->options, $opts);
+
+        if($this->options['header'] === true){
+            $this->setTpl('header', $translate);
+        }
     }
 
     public function setData($data = array()){
@@ -38,8 +47,9 @@ class Page{
     public function __destruct(){
         global $footer;
 
-        $footer = array_merge($footer, Statistics::getStatistics());
-
-        $this->setTpl('footer', $footer);
+        if($this->options['footer'] === true){
+            $footer = array_merge($footer, Statistics::getStatistics());
+            $this->setTpl('footer', $footer);
+        }
     }
 }

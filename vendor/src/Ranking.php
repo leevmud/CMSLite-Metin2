@@ -6,16 +6,15 @@ use CMSLite\Database;
 class Ranking{
 
     public static function getTop1(){
-        $conn = new Database(); 
 
         if(LYCAN === true){
-            $lycan = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job = 8 AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+            $lycan = Database::select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job = 8 AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
         }
         
-        $warrior = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (0, 4) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
-        $assassin = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (1, 5) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
-        $sura = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (2, 6) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
-        $shaman = $conn->select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (3, 7) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $warrior = Database::select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (0, 4) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $assassin = Database::select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (1, 5) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $sura = Database::select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (2, 6) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
+        $shaman = Database::select('SELECT name, job, level FROM '.PLAYER_DB.'.player WHERE job IN (3, 7) AND player.name NOT LIKE "[%]%" ORDER BY level DESC, playtime DESC LIMIT 1');
 
         if(!isset($warrior[0])){
             $warrior[0] = [
@@ -75,9 +74,7 @@ class Ranking{
 
         $start = $start * $quantidade;
 
-        $conn = new Database();
-
-        $result = $conn->select('SELECT SQL_CALC_FOUND_ROWS
+        $result = Database::select('SELECT SQL_CALC_FOUND_ROWS
         player.id, player.name, player.job, player.level, player.exp, player_index.empire
         FROM '.PLAYER_DB.'.player, '.PLAYER_DB.'.player_index
         WHERE player.account_id = player_index.id
@@ -87,7 +84,7 @@ class Ranking{
             ":QTD" => $quantidade
         ]);
 
-        $resultTotal = $conn->select('SELECT FOUND_ROWS() AS totalPages');
+        $resultTotal = Database::select('SELECT FOUND_ROWS() AS totalPages');
 
         return [
             "players" => $result,
@@ -101,9 +98,7 @@ class Ranking{
 
         $start = $start * $quantidade;
 
-        $conn = new Database();
-
-        $result = $conn->select('SELECT SQL_CALC_FOUND_ROWS
+        $result = Database::select('SELECT SQL_CALC_FOUND_ROWS
         guild.name, guild.master, guild.win, guild.draw, guild.loss, guild.ladder_point, guild.master, player_index.empire
         FROM '.PLAYER_DB.'.guild, '.PLAYER_DB.'.player_index
         WHERE player_index.pid1 = guild.master or
@@ -115,7 +110,7 @@ class Ranking{
             ":QTD" => $quantidade
         ]);
 
-        $resultTotal = $conn->select('SELECT FOUND_ROWS() AS totalPages');
+        $resultTotal = Database::select('SELECT FOUND_ROWS() AS totalPages');
 
         return [
             "guildas" => $result,
@@ -124,8 +119,7 @@ class Ranking{
     }
 
     public function getGuildName($playerID){
-        $conn = new Database();
-        $result = $conn->select('SELECT guild_member.guild_id, guild.name 
+        $result = Database::select('SELECT guild_member.guild_id, guild.name 
         FROM '.PLAYER_DB.'.guild_member, '.PLAYER_DB.'.guild
         WHERE guild_member.pid = :PID AND guild_member.guild_id = guild.id', [
             ":PID" => $playerID

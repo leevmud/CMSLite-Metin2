@@ -7,15 +7,13 @@ use CMSLite\Mailer;
 class User{
 
     public static function register($username, $password, $email){
-        $conn = new Database();
-
         if(ENABLE_REGISTER === false){
             User::setMsg([Translate::text('disabled_register'), 'failed']);
             return false;
         }
 
         if(ENABLE_MAX_ACCOUNTS_PER_EMAIL === true){
-            $countEmails = $conn->count("SELECT email FROM ".ACCOUNT_DB.".account WHERE email = :EMAIL", [
+            $countEmails = Database::count("SELECT email FROM ".ACCOUNT_DB.".account WHERE email = :EMAIL", [
                 ":EMAIL" => $email
             ]);
 
@@ -25,7 +23,7 @@ class User{
             }
         }
        
-        $result = $conn->count("SELECT login FROM ".ACCOUNT_DB.".account WHERE login = :USERNAME", [
+        $result = Database::count("SELECT login FROM ".ACCOUNT_DB.".account WHERE login = :USERNAME", [
             ":USERNAME" => $username
         ]);
         
@@ -33,7 +31,7 @@ class User{
             User::setMsg([Translate::text('username_not_avail'), 'failed']);
             return false;
         }else{
-            $result = $conn->count("INSERT INTO ".ACCOUNT_DB.".account (login, password, email, create_time, register_ip) VALUES (:USERNAME, :PASSWORD, :EMAIL, NOW(), :IP)",[
+            $result = Database::count("INSERT INTO ".ACCOUNT_DB.".account (login, password, email, create_time, register_ip) VALUES (:USERNAME, :PASSWORD, :EMAIL, NOW(), :IP)",[
                 ":USERNAME" => $username,
                 ":PASSWORD" => hashPassword($password),
                 ":EMAIL" => $email,
@@ -52,11 +50,8 @@ class User{
     }
 
     public static function login($username, $password){
-        
-        $conn = new Database();
-
         if(BLOCK_LOGIN_SITE_USER_BAN === true){
-            $getBanTime = $conn->select("SELECT status, availDt FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
+            $getBanTime = Database::select("SELECT status, availDt FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
                 ":LOGIN" => $username
             ]);
 
@@ -83,7 +78,7 @@ class User{
             }
         }
         
-        $result = $conn->select("SELECT id, login, password FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
+        $result = Database::select("SELECT id, login, password FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN", [
             ":LOGIN" => $username
         ]);
 
@@ -107,8 +102,7 @@ class User{
 
     //Verifica se o ID conectado pertence ao usuário.
     public static function isUserId(){
-        $conn = new Database();
-        $result = $conn->count("SELECT id, login FROM ".ACCOUNT_DB.".account WHERE id = :ID and login = :LOGIN", [
+        $result = Database::count("SELECT id, login FROM ".ACCOUNT_DB.".account WHERE id = :ID and login = :LOGIN", [
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
         ]);
@@ -121,8 +115,7 @@ class User{
     }
 
     public static function isUserEmail($email){
-        $conn = new Database();
-        $result = $conn->count("SELECT email FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN AND email = :EMAIL", [
+        $result = Database::count("SELECT email FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN AND email = :EMAIL", [
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username'],
             ":EMAIL" => $email
@@ -136,8 +129,7 @@ class User{
     }
 
     public static function isUserPassword($userPassword){
-        $conn = new Database();
-        $result = $conn->count("SELECT password FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN AND password = :PASSWORD", [
+        $result = Database::count("SELECT password FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN AND password = :PASSWORD", [
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username'],
             ":PASSWORD" => hashPassword($userPassword)
@@ -161,8 +153,7 @@ class User{
     }
 
     public static function isAdmin(){
-        $conn = new Database();
-        $result = $conn->select("SELECT web_admin FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN", [
+        $result = Database::select("SELECT web_admin FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN", [
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
         ]);
@@ -200,9 +191,7 @@ class User{
     }
 
     public static function changeEmail($newEmail){
-        $conn = new Database();
-
-        $result = $conn->count("UPDATE ".ACCOUNT_DB.".account SET email = :NEWEMAIL WHERE id = :ID AND login = :LOGIN", [
+        $result = Database::count("UPDATE ".ACCOUNT_DB.".account SET email = :NEWEMAIL WHERE id = :ID AND login = :LOGIN", [
             ":NEWEMAIL" => $newEmail,
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
@@ -218,8 +207,7 @@ class User{
     }
 
     public static function changePassword($newPassword){
-        $conn = new Database();
-        $result = $conn->count("UPDATE ".ACCOUNT_DB.".account SET password = :NEWPASSWORD WHERE id = :ID AND login = :LOGIN", [
+        $result = Database::count("UPDATE ".ACCOUNT_DB.".account SET password = :NEWPASSWORD WHERE id = :ID AND login = :LOGIN", [
             ":NEWPASSWORD" => hashPassword($newPassword),
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
@@ -235,9 +223,7 @@ class User{
     }
 
     public static function getCharacters(){
-        $conn = new Database();
-
-        $result = $conn->select("SELECT id, name, level FROM ".PLAYER_DB.".player WHERE account_id = :ID", [
+        $result = Database::select("SELECT id, name, level FROM ".PLAYER_DB.".player WHERE account_id = :ID", [
             ":ID" => $_SESSION['id']
         ]);
 
@@ -250,15 +236,13 @@ class User{
     }
     
     public static function moveCharacter($id){
-        $conn = new Database();
-
-        $canMove = $conn->count("SELECT id FROM ".PLAYER_DB.".player WHERE id = :ID AND account_id = :ACCOUNT_ID",[
+        $canMove = Database::count("SELECT id FROM ".PLAYER_DB.".player WHERE id = :ID AND account_id = :ACCOUNT_ID",[
             ":ID" => (int)$id,
             ":ACCOUNT_ID" => $_SESSION['id']
         ]);
 
         if($canMove > 0){
-            $result = $conn->select("SELECT empire FROM ".PLAYER_DB.".player_index WHERE id = :ID", [
+            $result = Database::select("SELECT empire FROM ".PLAYER_DB.".player_index WHERE id = :ID", [
                 ":ID" => $_SESSION['id']
             ]);
     
@@ -278,7 +262,7 @@ class User{
                 $y = 278290;
             }
     
-            $move = $conn->count("UPDATE ".PLAYER_DB.".player SET x = :X, y = :Y, map_index = :MAP_INDEX WHERE id = :ID",[
+            $move = Database::count("UPDATE ".PLAYER_DB.".player SET x = :X, y = :Y, map_index = :MAP_INDEX WHERE id = :ID",[
                 ":X" => $x,
                 ":Y" => $y,
                 ":MAP_INDEX" => $map_index,
@@ -299,16 +283,14 @@ class User{
     }
 
     public static function recoverPassword($user, $mail, $mailContent, $newPassword){
-        $conn = new Database();
-
-        $check = $conn->count("SELECT login, email FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN AND email = :MAIL",[
+        $check = Database::count("SELECT login, email FROM ".ACCOUNT_DB.".account WHERE login = :LOGIN AND email = :MAIL",[
             ":LOGIN" => $user,
             ":MAIL" =>$mail,
         ]);
 
         if($check > 0){
             //Update account password
-            $queryPassword = $conn->count("UPDATE ".ACCOUNT_DB.".account SET password = :NEWPW WHERE login = :LOGIN AND email = :MAIL", [
+            $queryPassword = Database::count("UPDATE ".ACCOUNT_DB.".account SET password = :NEWPW WHERE login = :LOGIN AND email = :MAIL", [
                 ":NEWPW" => hashPassword($newPassword),
                 ":LOGIN" => $user,
                 ":MAIL" => $mail
@@ -331,9 +313,7 @@ class User{
     }
 
     public static function sendSocialID($socialID, $mailContent){
-        $conn = new Database();
-
-        $userEmail = $conn->select("SELECT email FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN", [
+        $userEmail = Database::select("SELECT email FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN", [
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
         ]);
@@ -343,7 +323,7 @@ class User{
             return false;
         }
 
-        $result = $conn->count("UPDATE ".ACCOUNT_DB.".account SET social_id = :SID WHERE id = :ID AND login = :LOGIN",[
+        $result = Database::count("UPDATE ".ACCOUNT_DB.".account SET social_id = :SID WHERE id = :ID AND login = :LOGIN",[
             ":SID" => $socialID,
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
@@ -361,9 +341,7 @@ class User{
     }   
 
     public static function sendWarehousePW($warehousePW, $mailContent){
-        $conn = new Database();
-
-        $userEmail = $conn->select("SELECT email FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN", [
+        $userEmail = Database::select("SELECT email FROM ".ACCOUNT_DB.".account WHERE id = :ID AND login = :LOGIN", [
             ":ID" => $_SESSION['id'],
             ":LOGIN" => $_SESSION['username']
         ]);
@@ -373,7 +351,7 @@ class User{
             return false;
         }
 
-        $result = $conn->count("UPDATE ".PLAYER_DB.".safebox SET password = :PW WHERE account_id = :ID", [
+        $result = Database::count("UPDATE ".PLAYER_DB.".safebox SET password = :PW WHERE account_id = :ID", [
             ":PW" => $warehousePW,
             ":ID" => $_SESSION['id']
         ]);
